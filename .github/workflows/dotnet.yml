@@ -22,4 +22,6 @@ jobs:
     - name: Create Package for Nuget.org\
       run: dotnet pack
     - name: Publish Package to Nuget.org
-      run: dotnet nuget push ./Xero.NetStandard.OAuth2/bin/Debug/Xero.NetStandard.OAuth2.${{ github.event.release.name }}.nupkg --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json
+      run: >
+        dotnet nuget add source "https://pkgs.dev.azure.com/servicetitan-packages/nuget/_packaging/servicetitan-nuget/nuget/v3/index.json" --name publishSource --username "user" --password ${{ secrets.ST_NUGETKEY }} --store-password-in-clear-text
+        && dotnet nuget push ./Xero.NetStandard.OAuth2/bin/Debug/Xero.NetStandard.OAuth2.${{ github.event.release.name }}.nupkg --api-key "az" --source "https://pkgs.dev.azure.com/servicetitan-packages/nuget/_packaging/servicetitan-nuget/nuget/v3/index.json"
