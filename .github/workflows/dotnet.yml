@@ -3,6 +3,9 @@ name: .NET
 on:
   release:
     types: [published]
+
+env:
+  NUGET_SOURCE_URL: 'https://pkgs.dev.azure.com/servicetitan-packages/nuget/_packaging/servicetitan-nuget/nuget/v3/index.json'
   
 jobs:
   build:
@@ -23,5 +26,5 @@ jobs:
       run: dotnet pack
     - name: Publish Package to Nuget.org
       run: >
-        dotnet nuget add source "https://pkgs.dev.azure.com/servicetitan-packages/nuget/_packaging/servicetitan-nuget/nuget/v3/index.json" --name publishSource --username "user" --password ${{ secrets.ST_NUGETKEY }} --store-password-in-clear-text
-        && dotnet nuget push ./Xero.NetStandard.OAuth2/bin/Debug/Xero.NetStandard.OAuth2.${{ github.event.release.name }}.nupkg --api-key "az" --source "https://pkgs.dev.azure.com/servicetitan-packages/nuget/_packaging/servicetitan-nuget/nuget/v3/index.json"
+        dotnet nuget add source ${{secrets.NUGET_SOURCE_URL}} --name publishSource --username "user" --password ${{ secrets.ST_NUGETKEY }} --store-password-in-clear-text
+        && dotnet nuget push ./Xero.NetStandard.OAuth2/bin/Debug/Xero.NetStandard.OAuth2.${{ github.event.release.name }}.nupkg --api-key "az" --source publishSource
