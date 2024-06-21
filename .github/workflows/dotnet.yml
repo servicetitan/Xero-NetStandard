@@ -25,6 +25,6 @@ jobs:
     - name: Create Package for Nuget.org\
       run: dotnet pack
     - name: Create Package Source
-      run: dotnet nuget add source ${{secrets.NUGET_SOURCE_URL}} --name publishSource --username "user" --password ${{ secrets.ST_NUGETKEY }} --store-password-in-clear-text
+      run: dotnet nuget add source ${{env.NUGET_SOURCE_URL}} --name publishSource --username "user" --password ${{ secrets.NUGET_PASSWORD }} --store-password-in-clear-text
     - name: Publish Package to Nuget.org
       run: dotnet nuget push ./Xero.NetStandard.OAuth2/bin/Debug/Xero.NetStandard.OAuth2.${{ github.event.release.name }}.nupkg --api-key "az" --source publishSource
