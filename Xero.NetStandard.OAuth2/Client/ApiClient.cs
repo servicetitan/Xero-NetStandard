@@ -501,7 +501,7 @@ namespace Xero.NetStandard.OAuth2.Client
         {
             RestClientOptions clientOptions = new RestClientOptions(_baseUrl)
             {
-                MaxTimeout = configuration.Timeout
+                Timeout = TimeSpan.FromMilliseconds(configuration.Timeout)
             };
             if (configuration.UserAgent != null)
             {
